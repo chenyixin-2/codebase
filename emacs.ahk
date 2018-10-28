@@ -4,8 +4,6 @@
 Control::CapsLock
 CapsLock::Control
 
-; MsgBox You pressed Yes
-
 ;^x & ^s::
 ;Send ^s
 ;return
@@ -27,6 +25,10 @@ Return
 SendInput, ^f
 ;Send ^f
 return
+
+^d::
+Send, {Del}
+return 
 
 ^b::
 SendInput, {Left}
