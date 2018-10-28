@@ -1,12 +1,40 @@
-;#NoEnv
-;#UseHook
-SendMode Input
+#NoEnv
+#UseHook ;don't use "SendMode Input" mode, all hotkeys are missing
 
 Control::CapsLock
 CapsLock::Control
 
-; Test for keybinds
 ; MsgBox You pressed Yes
+
+;^x & ^s::
+;Send ^s
+;return
+
+^k::
+Send, {SHIFT}+{End}
+Send, ^x
+Return
+
+^y::
+Send, ^v
+Return
+
+^!d::
+Send, %A_MM%/%A_DD%/%A_YYYY%
+Return
+
+^i::
+SendInput, ^f
+;Send ^f
+return
+
+^b::
+SendInput, {Left}
+return
+
+^f::
+Send {Right}
+return
 
 ^a::
 Send {Home}
@@ -24,16 +52,16 @@ return
 Send {Down}
 return
 
-^w::
-Send ^{Del}
-return
-
 !f::
 Send ^{Right}
 return
 
 !b::
 Send ^{Left}
+return
+
+!d::
+Send ^{Del}
 return
 
 ^!h::
