@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue"></script>
+
+    <div id="app">
+        <!-- data binding -->
+        <p>{{ message }}</p>
+
+        <!-- bind to attibute -->
+        <span v-bind:title="message">
+            Hover your mouse over me for a few seconds
+            to see my dynamically bound title!
+        </span>
+        <br>
+
+        <!-- bind to data member -->
+        <span v-if="seen">Now you see me</span>
+
+    </div>
+</body>
+
+</html>
