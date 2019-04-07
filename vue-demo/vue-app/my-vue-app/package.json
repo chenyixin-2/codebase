@@ -14,7 +14,10 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "echarts": "^4.2.0-rc.2",
+    "v-charts": "^1.19.0",
     "vue": "^2.5.2",
+    "vue-i18n": "^8.7.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
