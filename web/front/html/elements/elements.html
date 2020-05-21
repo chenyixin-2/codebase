@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WebSocket Playground</title>
+</head>
+
+<body>
+    <div>
+        通用 流内容 容器
+        语义 不代表任何特定类型的内容
+        进行分组，一般用于样式化相关的需求
+        编组元素
+    </div>
+    <span>
+        短语内容
+        行内容器
+        编组元素
+    </span>
+    <p>
+        块级元素
+        段落
+        相邻文本分离的文本
+        缩进
+    </p>
+
+    <h1>这是h1元素</h1>
+    <h2>这是h2元素</h2>
+    <h3>这是h3元素</h3>
+    <h4>这是h4元素</h4>
+    <h5>这是h5元素</h5>
+    <h6>这是h6元素</h6>
+
+    <!-- without order -->
+    <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+    </ul>
+
+    <!-- with order -->
+    <ol>
+        <li>HMTL</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+    </ol>
+
+    <p>This is a <strong>strong</strong> element </p>
+    <p>This is a <small>strong</small> element </p>
+    <p>I like <em>Tylor Swift</em></p>
+
+    <p>
+        new line
+        <br>
+    </p>
+    <p>
+        an horizonal line
+        <hr>
+    </p>
+
+    <!-- a tag -->
+    <div>
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/a">
+            MDN
+        </a>
+
+        <!-- jump to local tag -->
+        <a href="#常用HTML元素">
+            链接到常用HTML元素
+        </a>
+
+        <a href="https://developer.mozilla.org/zh-CN/">
+            <img src="https://mdn.mozillademos.org/files/6851/mdn_logo.png" alt="MDN logo" />
+        </a>
+
+        <div>
+            <p>
+                <a href="http://localhost:3008/download" download>Download pdf : with poped box</a>
+            </p>
+            <p>
+                <a href="http://localhost:3008/download" download target="tab">Download pdf : tab </a>
+            </p>
+            <p>
+                <a href="http://localhost:3008/download" download target="window">Download pdf : window </a>
+            </p>
+        </div>
+
+        <div>
+            <p>
+                <input></input>
+            </p>
+            <p>
+                <input type="button"></input>
+            </p>
+            <p>
+                <input type="checkbox"></input>
+            </p>
+            <p>
+                <input type="color"></input>
+            </p>
+            <p>
+                <input type="password"></input>
+            </p>
+            <p>
+                <input type="radio"></input>
+            </p>
+
+            <!-- open within same window -->
+            <!-- <form action="" target="_self"> -->
+
+            <!-- open with new window : _blank: 以新的文档窗口加载返回值。 -->
+            <!-- <form action="" target="_blank"> -->
+            
+            <!-- jump to the parent window -->
+            <form action="" target="_parent">
+                <label for="GET-name">Name:</label>
+                <input id="GET-name" type="text" name="name">
+                <input type="submit" value="Save">
+            </form>
+
+            <form action="" method="post">
+                <label for="POST-name">Name:</label>
+                <input id="POST-name" type="text" name="name">
+                <input type="submit" value="Save">
+            </form>
+        </div>
+    </div>
+</body>

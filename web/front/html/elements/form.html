@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<!-- https://harttle.land/2015/08/03/form-submit.html -->
+
+<head>
+    <title>Forms </title>
+</head>
+
+<body>
+    <div>
+        <h1>One single button</h1>
+        <button id="jqbtn">提交</button>
+    </div>
+
+    <div>
+        <h1>Default with Input[type=submit]</h1>
+        <form>
+            <input name='key1'>
+            <input value='ok' type='submit'>
+        </form>
+    </div>
+
+    <div>
+        <h1>Button with button[type=submit]</h1>
+        <form>
+            <input name='key2'>
+            <button>确定</button>
+        </form>
+    </div>
+
+    <div>
+        <h1>Action with Get</h1>
+        <form action="localhost:8080" method="get">
+            First name: <input type="text" name="fname" />
+            Last name: <input type="text" name="lname" />
+            <button type="submit" value="Submit">Submit</button>
+            <button type="reset" value="Reset">Reset</button>
+        </form>
+    </div>
+
+    <div>
+        <h1>Action with Post</h1>
+        <form method="POST" action="localhost:8080">
+            <p>name: <input type="text" name="username"></p>
+            <p>password: <input type="password" name="password"></p>
+            <button id="jqbtn" type="sumbit">提交</button>
+        </form>
+    </div>
+
+    <div>
+        <h1>Stop Validation</h1>
+        <form onsubmit="return doValidation();">
+            <input name='stopValidation'>
+            <input value='ok' type='submit'>
+        </form>
+    </div>
+
+    <script>
+        function doValidation() {
+            alert("yes");
+            return true;
+        }
+    </script>
+</body>

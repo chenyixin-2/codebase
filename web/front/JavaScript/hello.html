@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.js"></script>
+<script type="text/javascript" src="common.js"></script>
+
+<!-- <script type="text/javascript" src="hello.js"></script>
+<script type="text/javascript" src="objects.js"></script>
+<script type="text/javascript" src="primitives.js"></script>
+<script type="text/javascript" src="strings.js"></script>
+<script type="text/javascript" src="arrays.js"></script>
+<script type="text/javascript" src="iterables.js"></script>
+<script type="text/javascript" src="map.js"></script>
+<script type="text/javascript" src="weakmap.js"></script>
+<script type="text/javascript" src="object_keys.js"></script>
+<script type="text/javascript" src="destructuring_assignment.js"></script>
+<script type="text/javascript" src="date.js"></script>
+<script type="text/javascript" src="closure.js"></script>
+<script type="text/javascript" src="scope.js"></script>
+<script type="text/javascript" src="tricks.js"></script>
+<script type="text/javascript" src="functions.js"></script>
+<script type="text/javascript" src="scheduling.js"></script>
+<script type="text/javascript" src="algorithms.js"></script>
+<script type="text/javascript" src="TN_Hoisting.js"></script>
+<script type="text/javascript" src="TN_Recursion.js"></script>
+<script type="text/javascript" src="TN_Decorators.js"></script>
+<script type="text/javascript" src="TN_Arguments.js"></script>
+<script type="text/javascript" src="TN_Algorithms.js"></script>
+<script type="text/javascript" src="TN_Binding.js"></script>
+<script type="text/javascript" src="TN_This.js"></script>
+<script type="text/javascript" src="TN_Arrow.js"></script>
+<script type="text/javascript" src="TN_Getset.js"></script> 
+<script type="text/javascript" src="TN_Const.js"></script>
+<script type="text/javascript" src="TN_Callback_Basic.js"></script> -->
+<!-- <script type="text/javascript" src="TN_Callback_Advanced.js"></script> -->
+<script type="text/javascript" src="test.js"></script>
+
+<head>
+    <!-- head definitions go here -->
+    <meta charset="utf-8">
+    <style>
+        .message-ball {
+            font-size: 20px;
+            line-height: 200px;
+            text-align: center;
+        }
+
+        .circle {
+            transition-property: width, height, margin-left, margin-top;
+            transition-duration: 2s;
+            position: fixed;
+            transform: translateX(-50%) translateY(-50%);
+            background-color: red;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- the content goes here -->
+    <script>
+        function go() {
+            showCircle(150, 150, 100, div => {
+                div.classList.add('message-ball');
+                div.append("Hello, world!");
+            });
+        }
+
+        function showCircle(cx, cy, radius, callback) {
+            let div = document.createElement('div'); // create element 
+            div.style.width = 0; // setting element
+            div.style.height = 0;
+            div.style.left = cx + 'px';
+            div.style.top = cy + 'px';
+            div.className = 'circle';
+            document.body.append(div); // append element to "body"
+
+            setTimeout(() => {
+                div.style.width = radius * 2 + 'px';
+                div.style.height = radius * 2 + 'px';
+
+                div.addEventListener('transitionend', function handler() {
+                    div.removeEventListener('transitionend', handler);
+                    callback(div);
+                });
+            }, 0);
+        }
+    </script>
+    <a href="#" value='closure' id="size-12">12</a>
+
+    <button onclick="go()">Click me</button>
+
+    <p id="help">Helpful notes will appear here</p>
+    <p>E-mail: <input type="text" id="email" name="email"></p>
+    <p>Name: <input type="text" id="name" name="name"></p>
+    <p>Age: <input type="text" id="age" name="age"></p>
+</body>
+
+</html>

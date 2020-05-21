@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <title>地图显示</title>
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=您申请的key值&plugin=AMap.PlaceSearch"></script>
+    <script type="text/javascript"
+        src="https://a.amap.com/jsapi_demos/static/demo-center/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript"
+        src="https://a.amap.com/jsapi_demos/static/demo-center/js/underscore-min.js"></script>
+    <script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/backbone-min.js"></script>
+    <script type="text/javascript" src='https://a.amap.com/jsapi_demos/static/demo-center/js/prety-json.js'></script>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=1df728c6283873b29a2f11412f99707e"></script>
+    <script>
+        var map = new AMap.Map('container', {
+            zoom: 11,//级别
+            center: [116.397428, 39.90923],//中心点坐标                
+            viewMode: '3D',//使用3D视图
+            layers: []
+        });
+
+        AMap.plugin('AMap.ToolBar', function () {
+            let toolbar = new AMap.ToolBar();
+            map.addControl(toolbar);
+        });
+
+        AMap.plugin('AMap.PlaceSearch', function () {
+            let placeSearch = new AMap.PlaceSearch();
+            map.addControl(placeSearch);
+        });
+
+        AMap.plugin('AMap.OverView', function () {
+            let overView = new AMap.OverView();
+            map.addControl(overView);
+        });
+
+        var path = [[116, 39], [116, 40], [117, 39]]; //简写
+        var polyline = new AMap.Polyline({
+            path: path,
+        })
+        map.add(polyline);
+
+        // window.onload = function () {
+        //     // Layer
+        //     let trafficLayer = new AMap.TileLayer.Traffic({
+        //         zIndex: 10
+        //     });
+        //     map.add(trafficLayer);
+
+        //     // Marker / Text / CircleMarker
+        //     var lineArr = [
+        //         [116.368904, 39.913423],
+        //         [116.382122, 39.901176],
+        //         [116.387271, 39.912501],
+        //         [116.398258, 39.904600]
+        //     ];
+        //     var polyline = new AMap.Polyline({
+        //         path: lineArr,          //设置线覆盖物路径
+        //         strokeColor: "#3366FF", //线颜色
+        //         strokeWeight: 5,        //线宽
+        //         strokeStyle: "solid",   //线样式
+        //     });
+        //     map.add(polyline);
+
+        //     // Circle
+        //     var circle = new AMap.Circle({
+        //         center: new AMap.LngLat(116.39, 39.9),  // 圆心位置
+        //         radius: 1000, // 圆半径
+        //         fillColor: 'red',   // 圆形填充颜色
+        //         strokeColor: '#fff', // 描边颜色
+        //         strokeWeight: 2, // 描边宽度
+        //     });
+        //     map.add(circle);
+
+        //     // Marker Event
+        //     var infoWindow = new AMap.InfoWindow({ //创建信息窗体
+        //         isCustom: true,  //使用自定义窗体
+        //         content: '<div>信息窗体</div>', //信息窗体的内容可以是任意html片段
+        //         offset: new AMap.Pixel(16, -45)
+        //     });
+        //     var onMarkerClick = function (e) {
+        //         infoWindow.open(map, e.target.getPosition());//打开信息窗体
+        //         //e.target就是被点击的Marker
+        //     }
+        //     var marker = new AMap.Marker({
+        //         position: [116.481181, 39.989792]
+        //     })
+        //     map.add(marker);
+        //     marker.on('click', onMarkerClick);//绑定click事件
+        // }
+
+        // // 获取搜索信息
+        // function autoInput() {
+        //     debugger
+        //     var keywords = '常州大学';
+        //     AMap.plugin('AMap.PlaceSearch', function () {
+        //         var autoOptions = {
+        //             city: '全国'
+        //         }
+        //         var placeSearch = new AMap.PlaceSearch(autoOptions);
+        //         placeSearch.search(keywords, function (status, result) {
+        //             // 搜索成功时，result即是对应的匹配数据
+        //             var node = new PrettyJSON.view.Node({
+        //                 el: document.querySelector("#input-info"),
+        //                 data: result
+        //             });
+        //         })
+        //     })
+        // }
+        // autoInput();
+    </script>
+</body>
+
+</html>
