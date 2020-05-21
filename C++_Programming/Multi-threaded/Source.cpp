@@ -113,7 +113,5 @@ int main()
 	cout << ::ResumeThread(myhandle_opt) << endl;
 	cout << ::SuspendThread(myhandle_opt) << endl;
 
-	// Example #5 : 
-
 	return 0;
 }

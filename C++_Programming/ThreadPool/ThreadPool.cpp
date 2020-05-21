@@ -66,6 +66,11 @@ ThreadPool::~ThreadPool()
 	::CloseThreadpool(_pool);
 }
 
+// For the following £º
+// what is "ThreadPoolWork" ?
+// 1. https://dorodnic.com/blog/2015/10/17/windows-threadpool/
+// 2. Windows via C++
+
 int main()
 {
     std::cout << "Hello World!\n";
