@@ -12,7 +12,8 @@ DWORD WINAPI myThread(LPVOID lpParameter) {
 	return 0;
 }
 
-#define COUT_SAFE
+//#define COUT_SAFE
+#define PRINTF_UNSAFE
 
 DWORD WINAPI mythreadA(__in LPVOID lpParameter)
 {
@@ -38,12 +39,11 @@ unsigned int __stdcall mythreadB(void* data) {
 
 #ifdef COUT_SAFE
 	cout << "Thread B" << endl;
-	return 0;
 #endif
 
 #ifdef PRINTF_SAFE
-
 #endif // PRINTF_SAFE
+	return 0;
 }
 
 void mythreadC(void* data)
@@ -55,11 +55,9 @@ void mythreadC(void* data)
 #ifdef COUT_SAFE
 	cout << "Thread C" << endl;
 #endif
-
 #ifdef PRINTF_SAFE
-
 #endif // PRINTF_SAFE
-
+	return;
 }
 
 int main()
@@ -85,7 +83,8 @@ int main()
 
 	//// Example #2
 	HANDLE myhandleA, myhandleB, myHandleC;
-	myhandleA = CreateThread(0, 0, mythreadA, 0, 0, 0);
+
+	myhandleA = CreateThread(0, 0, mythreadA, 0, 0, 0);   
 	WaitForSingleObject(myhandleA, INFINITE);
 	CloseHandle(myhandleA);
 
@@ -95,6 +94,26 @@ int main()
 
 	myHandleC = (HANDLE)_beginthread(&mythreadC, 0, 0);
 	getchar();
+
+	// Example #3 : batch of handles
+	HANDLE myhandle[3];
+	myhandle[0] = CreateThread(0, 0, mythreadA, 0, 0, 0);
+	myhandle[1] = (HANDLE)_beginthreadex(0, 0, &mythreadB, 0, 0, 0);
+	myhandle[2] = (HANDLE)_beginthread(&mythreadC, 0, 0);
+	::WaitForMultipleObjects(sizeof(myhandle) / sizeof(myhandle[0]), myhandle, true, INFINITE);
+
+	for (auto& handle : myhandle) {
+		::TerminateThread(handle, 0);
+		::CloseHandle(handle);
+	}
+
+	// Example #4 : Operation to handles
+	HANDLE myhandle_opt;
+	myhandle_opt = CreateThread(0, 0, myThread, &myCounter, CREATE_SUSPENDED, &myThreadID);
+	cout << ::ResumeThread(myhandle_opt) << endl;
+	cout << ::SuspendThread(myhandle_opt) << endl;
+
+	// Example #5 : 
 
 	return 0;
 }
