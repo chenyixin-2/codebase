@@ -1,4 +1,4 @@
-export default class Comparartor {
+module.exports = class Comparartor {
     /**
     * @param {function(a: *, b: *)} [compareFunction] - It may be custom compare function that, let's
     * say may compare custom objects together.

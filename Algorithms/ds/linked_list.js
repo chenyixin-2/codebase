@@ -1,7 +1,7 @@
-import LinkedListNode from './linked_list_node';
-import Comparartor from '../ds/utils/comparator/Comparator';
+const LinkedListNode = require('../ds/linked_list_node')
+const Comparartor = require('../ds/utils/comparator/Comparator')
 
-export default class LinkedList {
+module.exports = class LinkedList {
     /**
      * @param {function} [comparatorFunction]
      */
@@ -55,20 +55,22 @@ export default class LinkedList {
             return null;
         }
 
-        // this.head is the special case
-        // if head is the one to delete, then delete it.
-        let deleteNode = null;
+        let deletedNode = null;
+
+        // If the head must be deleted then make next node that is differ
+        // from the head to be a new head.
         while (this.head && this.compare.equal(this.head.value, value)) {
-            deleteNode = this.head;
+            deletedNode = this.head;
             this.head = this.head.next;
         }
 
-        // delete other node
         let currentNode = this.head;
-        if (currentNode.next) {
+
+        if (currentNode !== null) {
+            // If next node must be deleted then make next node to be a next next one.
             while (currentNode.next) {
                 if (this.compare.equal(currentNode.next.value, value)) {
-                    deleteNode = currentNode.next;
+                    deletedNode = currentNode.next;
                     currentNode.next = currentNode.next.next;
                 } else {
                     currentNode = currentNode.next;
@@ -76,12 +78,12 @@ export default class LinkedList {
             }
         }
 
-        // tail is the special case
+        // Check if tail must be deleted.
         if (this.compare.equal(this.tail.value, value)) {
             this.tail = currentNode;
         }
 
-        return deleteNode;
+        return deletedNode;
     }
 
     /**
@@ -109,6 +111,26 @@ export default class LinkedList {
             currentNode = currentNode.next;
         }
         return null;
+    }
+
+    /**
+ * @return {LinkedListNode}
+ */
+    deleteHead() {
+        if (!this.head) {
+            return null;
+        }
+
+        const deletedHead = this.head;
+
+        if (this.head.next) {
+            this.head = this.head.next;
+        } else {
+            this.head = null;
+            this.tail = null;
+        }
+
+        return deletedHead;
     }
 
     /**
