@@ -1,0 +1,14 @@
+{
+  "name": "algorithms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "algorithms.js",
+  "scripts": {
+    "test": "node_modules/.bin/jest __test__/"
+  },
+  "author": "chentoz",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^26.0.1"
+  }
+}

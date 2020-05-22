@@ -187,7 +187,6 @@ export default class LinkedList {
             prevNode = currNode;
             currNode = nextNode;
         }
-
         this.tail = this.head;
         this.head = prevNode; // prevNode is "tail" at last iteration
     }
