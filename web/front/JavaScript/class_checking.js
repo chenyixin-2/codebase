@@ -34,5 +34,37 @@ lg(arr instanceof Object);
 
     let obj2 = new Object();
     lg(`PrototypeOf : ${animal.isPrototypeOf(obj)}`);
-    lg(`PrototypeOf : ${animal.isPrototypeOf(obj2)}`);    
+    lg(`PrototypeOf : ${animal.isPrototypeOf(obj2)}`);
+
+    //////////////////////////////////////////////////////////////////
+    // function prototyep
+    //////////////////////////////////////////////////////////////////
+    function Foo() {}
+    function Bar() {}
+    function Baz() {}
+
+    Bar.prototype = Object.create(Foo.prototype);
+    Baz.prototype = Object.create(Bar.prototype);
+
+    var baz = new Baz();
+    lg(Baz.prototype.isPrototypeOf(baz));
+    lg(Bar.prototype.isPrototypeOf(baz));
+    lg(Foo.prototype.isPrototypeOf(baz));
+    lg(Object.prototype.isPrototypeOf(baz)); // object is root of chain
+}
+
+//////////////////////////////////////////////////////////////////
+// tricks : show object type
+//////////////////////////////////////////////////////////////////
+{
+    let objectToString = Object.prototype.toString;
+    let arr = [];
+
+    lg(objectToString.call(arr));
+
+    lg(objectToString.call(123));
+
+    lg(objectToString.call(null));
+
+    lg(objectToString.call(alert));
 }
