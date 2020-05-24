@@ -4,14 +4,32 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Illumination"
+        xmlns:self="clr-namespace:WPF_Illumination"
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Name="wnd" Height="450" Width="800">
     <Window.Resources>
         <local:YesNoToBooleanConverter x:Key ="YesNoToBooleanConverter" />
+        <self:DebugDummyConverter x:Key="DebugDummyConverter" />
+        <sys:String x:Key="strHelloWorld">Hello, World</sys:String>
+        <!--array of combox box-->
+        <sys:String x:Key="ComboBoxTitle">Items:</sys:String>
+        <x:Array x:Key="ComboBoxItems" Type="sys:String">
+            <sys:String>Item #1</sys:String>
+            <sys:String>Item #2</sys:String>
+            <sys:String>Item #3</sys:String>
+        </x:Array>
+        <!--Backgroud brush-->
+        <LinearGradientBrush x:Key="WindowBackgroundBrush">
+            <GradientStop Offset="0" Color="Silver"/>
+            <GradientStop Offset="1" Color="Gray"/>
+        </LinearGradientBrush>
     </Window.Resources>
+
     <Grid Name="pnlMainGrid" MouseUp="pnlMainGrid_MouseUp" Background="LightBlue">
 
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72" Margin="23,18,365,309" Height="92" Width="404" RenderTransformOrigin="0.5,0.5">
+        <TextBlock Text="{StaticResource strHelloWorld}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72" Margin="13,17,349,310" Height="92" Width="430" RenderTransformOrigin="0.5,0.5">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -20,7 +38,6 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </TextBlock.RenderTransform>
-            Hello, WPF!
         </TextBlock>
 
         <Button FontWeight="Bold" Content="A button" Margin="619,363,73,10" MouseUp="pnlMainGrid_MouseUp"/>
@@ -91,24 +108,48 @@
 
         <!--Responding to data source changes-->
         <Grid>
-            <DockPanel Margin="10,138,614,41">
+            <DockPanel Margin="10,138,614,41" Name="pnlMain">
+                <DockPanel.Resources>
+                    <sys:String x:Key="strPanel">Hello, Panel World!</sys:String>
+                </DockPanel.Resources>
                 <StackPanel DockPanel.Dock="Right" Margin="10,0,0,38" Width="86">
                     <Button Name="btnAddUser" Click="btnAddUser_Click">Add user</Button>
                     <Button Name="btnChangeUser" Click="btnChangeUser_Click" Margin="0,5">Change user</Button>
                     <Button Name="btnDeleteUser" Click="btnDeleteUser_Click">Delete user</Button>
                 </StackPanel>
-                <ListBox Name="lbUsers" DisplayMemberPath="Name" Margin="0,0,0,38" Width="80"></ListBox>
+                <ListBox Name="lbUsers" DisplayMemberPath="Name" Width="80" Height="202" VerticalAlignment="Top"/>
             </DockPanel>
         </Grid>
 
         <!--Implementing a simple value converter-->
         <StackPanel Margin="232,313,404,25">
-            <TextBox Name="txtValue3" />
+            <TextBox x:Name="txtValue3" />
             <WrapPanel Margin="0, 10">
                 <TextBlock Text="Current value is :"/>
-                <TextBlock Text="{Binding ElementName=txtValue3, Path=Text, Converter={StaticResource YesNoToBooleanConverter}}"></TextBlock>
+                <TextBlock Text="{Binding Text, Converter={StaticResource YesNoToBooleanConverter}, ElementName=txtValue3}"/>
             </WrapPanel>
-            <CheckBox IsChecked="{Binding ElementName=txtValue3, Path=Text, Converter={StaticResource YesNoToBooleanConverter}}" Content="Yes" />
+            <CheckBox IsChecked="{Binding Text, Converter={StaticResource YesNoToBooleanConverter}, ElementName=txtValue3}" Content="Yes" />
         </StackPanel>
+
+        <!--Debug Trace-->
+        <Grid Margin="449,359,239,10">
+            <TextBox Text="{Binding Title, diag:PresentationTraceSources.TraceLevel=High}" />
+        </Grid>
+        <!--Debugger-->
+        <Grid Margin="10">
+            <TextBlock Text="{Binding Title, ElementName=wnd, Converter={StaticResource DebugDummyConverter}}" Margin="92,350,597,10" />
+        </Grid>
+        <Grid Margin="10,0,-10,0">
+            <StackPanel Margin="229,100,398,226">
+                <Label Content="{StaticResource ComboBoxTitle}" />
+                <ComboBox ItemsSource="{StaticResource ComboBoxItems}" />
+            </StackPanel>
+        </Grid>
+        <Grid Margin="135,49,565,326">
+            <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="-21,207,0,-187" Width="70">
+                <Button x:Name="btnClickMe" Click="btnClickMe_Click" Content="Click me!" Width="69"/>
+            </WrapPanel>
+            <ListBox Name="lbResult" Margin="-44,255,10,-252" />
+        </Grid>
     </Grid>
 </Window>

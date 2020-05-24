@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
+using System.Diagnostics; // Debugger
+
 namespace WPF_Illumination
 {
     /// <summary>
@@ -52,7 +54,7 @@ namespace WPF_Illumination
     public class YesNoToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
+       {
             switch(value.ToString().ToLower())
             {
                 case "yes":
@@ -74,6 +76,20 @@ namespace WPF_Illumination
                     return "no";
             }
             return "no";
+        }
+    }
+    public class DebugDummyConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            //Debugger.Break();
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            //Debugger.Break();
+            return value;
         }
     }
     public partial class MainWindow : Window
@@ -147,6 +163,13 @@ namespace WPF_Illumination
                 users.Remove(lbUsers.SelectedItem as User);
 
             e.Handled = true;
+        }
+
+        private void btnClickMe_Click(object sender, RoutedEventArgs e)
+        {
+            lbResult.Items.Add(pnlMain.FindResource("strPanel").ToString());
+            lbResult.Items.Add(this.FindResource("strHelloWorld").ToString());
+            lbResult.Items.Add(Application.Current.FindResource("strApp").ToString());
         }
     }
 }
