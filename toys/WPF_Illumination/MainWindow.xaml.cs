@@ -22,18 +22,12 @@ namespace WPF_Illumination
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     
+    // data binding
     public class User : INotifyPropertyChanged
     {
         private string name;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyPropertyChanged(string propName)
+        public string Name
         {
-            if(this.PropertyChanged != null) {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
-        }
-        public string Name {
             get { return this.name; }
             set
             {
@@ -44,16 +38,58 @@ namespace WPF_Illumination
                 }
             }
         }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
+        }
+    }
+
+    // value converter
+    public class YesNoToBooleanConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            switch(value.ToString().ToLower())
+            {
+                case "yes":
+                case "our":
+                    return true;
+                case "no":
+                case "non":
+                    return false;
+            }
+            return false;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if(value is bool)
+            {
+                if ((bool)value == true)
+                    return "yes";
+                else
+                    return "no";
+            }
+            return "no";
+        }
     }
     public partial class MainWindow : Window
     {
         private int count = 0;
-        private List<User> users = new List<User>();
+
+        // for Notification sample
+        private ObservableCollection<User> users = new ObservableCollection<User>();
+        //private List<User> users = new List<User>();
 
         public MainWindow()
         {
             InitializeComponent();
+
             pnlMainGrid.MouseUp += new MouseButtonEventHandler(pnlMainGrid_MouseUp);
+
             btnAddUser.Click += new RoutedEventHandler(btnAddUser_Click);
             btnDeleteUser.Click += new RoutedEventHandler(btnDeleteUser_Click);
             btnChangeUser.Click += new RoutedEventHandler(btnChangeUser_Click);
@@ -69,6 +105,7 @@ namespace WPF_Illumination
             // user demo : List as user
             users.Add(new User() { Name = "John Doe" });
             users.Add(new User() { Name = "Jane Doe" });
+            // ItemsSource for ListBox
             lbUsers.ItemsSource = users;
         }
 
@@ -77,29 +114,39 @@ namespace WPF_Illumination
             //MessageBox.Show("You clicked me at " + e.GetPosition(this).ToString());
             count++;
             this.Title = "Title " + count.ToString();
+            
+            e.Handled = true; //https://stackoverflow.com/questions/6034956/mousedown-event-firing-twice-wpf
         }
 
         private void btnUpdateSource_Click(object sender, RoutedEventArgs e)
         {
             BindingExpression binding = txtWindowTitle.GetBindingExpression(TextBox.TextProperty);
             binding.UpdateSource();
+
+            e.Handled = true;
         }
 
         private void btnAddUser_Click(object sender, RoutedEventArgs e)
         {
             users.Add(new User() { Name = "New user" });
+
+            e.Handled = true;
         }
 
         private void btnChangeUser_Click(object sender, RoutedEventArgs e)
         {
             if (lbUsers.SelectedItem != null)
                 (lbUsers.SelectedItem as User).Name = "Random Name";
+
+            e.Handled = true;
         }
 
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
         {
             if (lbUsers.SelectedItem != null)
                 users.Remove(lbUsers.SelectedItem as User);
+
+            e.Handled = true;
         }
     }
 }
