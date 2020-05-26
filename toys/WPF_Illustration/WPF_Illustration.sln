@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_Illumination", "..\WPF_Illumination\WPF_Illumination.csproj", "{AA6ABAD6-09D6-4D3F-880E-948060E75367}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_Advanced", "WPF_Advanced\WPF_Advanced.csproj", "{55625E00-840E-4614-B3E5-88B418A8FBA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_Advanced_Threaded", "WPF_Advanced_Threaded\WPF_Advanced_Threaded.csproj", "{EAABAA70-8E06-430A-9F94-27BF820851F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{AA6ABAD6-09D6-4D3F-880E-948060E75367}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA6ABAD6-09D6-4D3F-880E-948060E75367}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA6ABAD6-09D6-4D3F-880E-948060E75367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55625E00-840E-4614-B3E5-88B418A8FBA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55625E00-840E-4614-B3E5-88B418A8FBA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55625E00-840E-4614-B3E5-88B418A8FBA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55625E00-840E-4614-B3E5-88B418A8FBA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAABAA70-8E06-430A-9F94-27BF820851F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAABAA70-8E06-430A-9F94-27BF820851F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAABAA70-8E06-430A-9F94-27BF820851F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAABAA70-8E06-430A-9F94-27BF820851F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
