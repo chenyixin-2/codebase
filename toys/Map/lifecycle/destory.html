@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE-edge">
+	<meta name="viewport" content="initial-scale=1.0,user-scalable=no,width=device-width">
+	<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+	<style>
+		html,
+		body,
+		#container {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+	<title>map create and destory</title>
+</head>
+
+<body>
+	<div id="container"></div>
+	<div class="input-card" style="width: 18rem;">
+		<h4>Create, Destory Map</h4>
+		<div id="btns">
+			<div class="input-item">
+				<button id="create-btn" class="btn" style="margin-right: 1rem;">Create Map</button>
+				<button id="destroy-btn" class="btn">Destory Map</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://webapi.amap.com/maps?v=1.4.15&key=1df728c6283873b29a2f11412f99707e"></script>
+	<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+	<script>
+		var map = null;
+		function CreateMap(){
+			map = new AMap.Map('container', {
+				resizeEnable: true
+			});
+			log.success("Create map successfully");
+		}
+		function DestroyMap(){
+			map && map.destroy();
+			log.info("Map had been destories");
+		}
+
+		// initialize map
+		CreateMap();
+
+		// bind create, destory map
+		document.querySelector("#create-btn").onclick = CreateMap;
+		document.querySelector("#destroy-btn").onclick = DestroyMap;
+	</script>
+</body>
+</html>

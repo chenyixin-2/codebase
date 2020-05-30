@@ -62,12 +62,11 @@ int main(int argc, char *argv[])
     {
         /* receive up to the buffer size (minus 1 to leave space for a null terminator) bytes from the sender */
         if ((bytesRcvd = recv(sock, echoBuffer, RCVBUFSIZE - 1, 0)) <= 0)
-        {
             DieWithError("recv() failed or connection closed prematurely");
-            totalBytesRcvd += bytesRcvd;
-            echoBuffer[bytesRcvd] = '\0';
-            printf(echoBuffer);
-        }
+
+        totalBytesRcvd += bytesRcvd;
+        echoBuffer[bytesRcvd] = '\0';
+        printf(echoBuffer);
     }
     printf("\n");
 

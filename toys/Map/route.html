@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>地点关键字 + 骑行路线规划</title>
+    <style type="text/css">
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+
+        #panel {
+            position: fixed;
+            background-color: white;
+            max-height: 90%;
+            overflow-y: auto;
+            top: 10px;
+            right: 10px;
+            width: 280px;
+        }
+
+        #panel .amap-lib-driving {
+            border-radius: 4px;
+            overflow: hidden;
+        }
+    </style>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=1df728c6283873b29a2f11412f99707e&plugin=AMap.Riding"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="container"></div>
+    <div id="panel"></div>
+    <div class="input-card">
+        <h4>地图自适应</h4>
+        <input id="setFitView" type="button" class="btn" value="地图自适应显示" />
+    </div>
+    <div class="info">
+        <div id="centerCoord"></div>
+        <div id="tips"></div>
+    </div>
+    <script type="text/javascript">
+
+        var map = new AMap.Map("container", {
+            resizeEnable: true,
+            center: [116.397428, 39.90923],//地图中心点
+            zoom: 13 //地图显示的缩放级别
+        });
+
+        // 清除 map
+        map.clearMap();
+
+        // 查找残疾人的位置
+        let targetLocation = "翠园世家";
+        AMap.service(["AMap.PlaceSearch"], function () {
+            //构造地点查询类
+            var placeSearch = new AMap.PlaceSearch({
+                pageSize: 1, // 单页显示结果条数
+                pageIndex: 1, // 页码
+                city: "0519", // 兴趣点城市
+                citylimit: true,  //是否强制限制在设置的城市内搜索
+                map: map, // 展现结果的地图实例
+                // panel: "panel", // 结果列表将在此容器中进行展示。
+                autoFitView: true // 是否自动调整地图视野使绘制的 Marker点都处于视口的可见范围
+            });
+            //关键字查询
+            placeSearch.search(targetLocation, (status, result) => {
+                if (status == "complete" && result.info == 'OK') {
+                    let lng = result.poiList.pois[0].location.lng;
+                    let lat = result.poiList.pois[0].location.lat;
+
+                    var circle = AMap.Circle({
+                        center: new AMap.LngLat(lng, lat),
+                        radius: 1000, //半径
+                        strokeColor: "#FF33FF", //线颜色
+                        strokeOpacity: 0.2, //线透明度
+                        strokeWeight: 3,    //线宽
+                        fillColor: "#1791fc", //填充色
+                        fillOpacity: 0.05//填充透明度
+                    });
+                    circle.setMap(map);
+                }
+            });
+        });
+
+        // let url = `https://restapi.amap.com/v3/place/text?key=1df728c6283873b29a2f11412f99707e&keywords=${targetLocation}&city=常州&citylimit=true&offset=1&page=1&output=JSON`
+        // fetch(url).then((response) => {
+        //     debugger
+        //     console.log(response);
+        // }).then((data) => {
+        //     debugger
+        //     console.log(data);
+        // }).catch(() => {
+
+        // });
+
+        //步行导航
+        var riding = new AMap.Riding({
+            map: map,
+            autoFitView: true
+            // panel: "panel"
+        });
+        var riding2 = new AMap.Riding({
+            map: map,
+            autoFitView: true
+            // panel: "panel"
+        });
+        var riding3 = new AMap.Riding({
+            map: map,
+            autoFitView: true
+            // panel: "panel"
+        });
+
+        var riding4 = new AMap.Riding({
+            map: map,
+            autoFitView: true
+            // panel: "panel"
+        });
+
+        riding.search([
+            { keyword: '翠园世家', city: '常州' },
+            { keyword: '钟楼区五星乡上村', city: '常州' }
+        ], function (status, result) {
+            if (status === 'complete') {
+                log.success('绘制骑行路线完成');
+                console.log(result.destination);
+                new AMap.Marker({
+                    map: map,
+                    icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-3.png',
+                    position: [result.destination.lng, result.destination.lat],
+                    offset: new AMap.Pixel(-13, -30)
+                });
+            } else {
+                log.error('骑行路线数据查询失败' + result)
+            }
+        });
+        riding2.search([
+            { keyword: '翠园世家', city: '常州' },
+            { keyword: '武进区新河国际', city: '常州' }
+        ], function (status, result) {
+            if (status === 'complete') {
+                log.success('绘制骑行路线完成');
+                console.log(result.destination);
+                new AMap.Marker({
+                    map: map,
+                    icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-3.png',
+                    position: [result.destination.lng, result.destination.lat],
+                    offset: new AMap.Pixel(-13, -30)
+                });
+            } else {
+                log.error('骑行路线数据查询失败' + result);
+            }
+        });
+        riding3.search([
+            { keyword: '翠园世家', city: '常州' },
+            { keyword: '人民新家园', city: '常州' }
+        ], function (status, result) {
+            if (status === 'complete') {
+                log.success('绘制骑行路线完成');
+                console.log(result.destination);
+                new AMap.Marker({
+                    map: map,
+                    icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-3.png',
+                    position: [result.destination.lng, result.destination.lat],
+                    offset: new AMap.Pixel(-13, -30)
+                });
+            } else {
+                log.error('骑行路线数据查询失败' + result);
+            }
+        });
+        riding4.search([
+            { keyword: "翠园世家", city: '常州' },
+            { keyword: '翠竹北区', city: '常州' }
+        ], function (status, result) {
+            if (status === 'complete') {
+                log.success('绘制骑行路线完成');
+                console.log(result.destination);
+                new AMap.Marker({
+                    map: map,
+                    icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-3.png',
+                    position: [result.destination.lng, result.destination.lat],
+                    offset: new AMap.Pixel(-13, -30)
+                });
+            } else {
+                log.error('骑行路线数据查询失败' + result);
+            }
+        });
+
+        AMap.event.addDomListener(document.getElementById('setFitView'), 'click', function () {
+            var newCenter = map.setFitView();
+            document.getElementById('centerCoord').innerHTML = '当前中心点坐标：' + newCenter.getCenter();
+            document.getElementById('tips').innerHTML = '通过setFitView，地图自适应显示到合适的范围内,点标记已全部显示在视野中！';
+        });
+    </script>
+</body>
+
+</html>
