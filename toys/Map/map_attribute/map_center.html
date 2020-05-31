@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+	<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css">
+</head>
+<style>
+	html,
+	body,
+	#container {
+		width: 100%;
+		height: 100%;
+	}
+
+	#map-zoom,
+	#map-center {
+		color: #0288d1;
+	}
+
+	.info-region {
+		width: auto;
+		height: auto;
+		border: 1px solid black;
+		background-color: white;
+		position: absolute;
+		top: 20px;
+		left: 10px;
+	}
+
+	.input-card-two {
+		position: absolute;
+		bottom: 20px;
+		left: 10px;
+	}
+</style>
+<title> Map Level & Center : Get and Set </title>
+
+<body>
+	<div id="container"></div>
+	<div class="info">
+		<h4>Get map level and center coordinate</h4>
+		<p>Current Level: <span id="map-zoom">11</span></p>
+		<p>Current Center:<span id="map-center">121.498586,31.239637</span></p>
+	</div>
+
+	<div class="info-region">
+		<h4>Current Region</h4>
+		<p><span id="map-city"></span></p>
+	</div>
+
+	<div class="input-card" style="width:24em">
+		<h4>Set map level and center coordinate</h4>
+		<div class="input-item">
+			<button id="random-zoom-btn" class="btn">Random Set Map Level : setZoom</button>
+		</div>
+		<div class="input-item">
+			<button id="random-center-btn" class="btn">Random Set Map Center : setCenter</button>
+		</div>
+		<div class="input-item">
+			<button id="random-zoomcenter-btn" class="btn">Random Set Level and Center : setZoomAndCenter</button>
+		</div>
+	</div>
+
+	<!-- input box -->
+	<div class="input-card input-card-two" style="width: 24rem">
+		<h4>Setting current region</h4>
+		<div class="input-item">
+			<input id='city-name' placeholder="Beijing" type="text" style="margin-right:1rem;">
+			<button class="btn" id="query">Goto City:</button>
+		</div>
+	</div>
+
+	<script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+	<script src="https://webapi.amap.com/maps?v=1.4.15&key=1df728c6283873b29a2f11412f99707e"></script>
+	<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+
+	<!-- jquery, underscore, backbone, prety -->
+	<script type="text/javascript"
+		src="https://a.amap.com/jsapi_demos/static/demo-center/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript"
+		src="https://a.amap.com/jsapi_demos/static/demo-center/js/underscore-min.js"></script>
+	<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/backbone-min.js"></script>
+	<script type="text/javascript" src="https://a.amap.com/jsapi_demos/static/demo-center/js/prety-json.js"></script>
+
+	<script>
+		var map = new AMap.Map('container', {
+			resizeEnable: true, // if "container" changed its size
+			zoom: 11, // 3 ~ 18
+			center: [121.498586, 31.239637],
+			showIndoorMap: false // close "indoor" map
+		});
+
+		// query and "on" event
+		function logMapInfo() {
+			var zoom = map.getZoom(); // zoom
+			var center = map.getCenter(); // center
+
+			document.querySelector("#map-zoom").innerText = zoom;
+			document.querySelector("#map-center").innerText = center.toString();
+		}
+		map.on("moveend", logMapInfo);
+		map.on("zoomend", logMapInfo);
+
+		// set event "onto" button
+		document.querySelector("#random-zoom-btn").onclick = function () {
+			var zoom = Math.floor(Math.random() * 7) + 11; // zoom : 11 ~ 18
+			map.setZoom(zoom); // set level
+			log.info(`Current map zoom level ${zoom}`);
+		}
+		//绑定按钮事件，改变地图中心点
+		document.querySelector("#random-center-btn").onclick = function () {
+			var lng = 121.138398 + Math.floor(Math.random() * 589828) / 1e6; //经度范围[121.138398, 121.728226]
+			var lat = 30.972688 + Math.floor(Math.random() * 514923) / 1e6; //纬度范围[30.972688, 31.487611]
+			map.setCenter([lng, lat]); //设置地图中心点
+			log.info(`当前中心点已设为 ${lng.toFixed(6)},${lat.toFixed(6)}`);
+		}
+		//绑定按钮事件，改变地图层级与中心点
+		document.querySelector("#random-zoomcenter-btn").onclick = function () {
+			var zoom = Math.floor(Math.random() * 7) + 11;
+			var lng = 121.138398 + Math.floor(Math.random() * 589828) / 1e6;
+			var lat = 30.972688 + Math.floor(Math.random() * 514923) / 1e6;
+			map.setZoomAndCenter(zoom, [lng, lat]); //同时设置地图层级与中心点
+			log.info(`当前层级已设为${zoom}级，中心点已设为 ${lng.toFixed(6)},${lat.toFixed(6)}`);
+		}
+
+		// map info : region
+		function logMapInfo_Region() {
+			map.getCity((info) => {
+				var node = new PrettyJSON.view.Node({
+					el: document.querySelector("#map-city"),
+					data: info
+				});
+			});
+		}
+		logMapInfo_Region();
+		map.on("moveend", logMapInfo_Region);
+
+		function gotoCity() {
+			var val = document.querySelector("#city-name").value; // 
+			if (!val) {
+				val = "北京市";
+			}
+			map.setCity(val);
+			log.info(`Jumped to ${val}`);
+		}
+		document.querySelector('#query').onclick = gotoCity;
+		document.querySelector('#city-name').onkeydown = (e) => {
+			if (e.keyCode === 13) {
+				gotoCity();
+				return false;
+			}
+			return true;
+		}
+	</script>
+</body>
+
+</html>

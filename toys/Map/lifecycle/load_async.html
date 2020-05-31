@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatiable" content="IE=edge">
+		<meta name="viewport" content="initial-scale=1.0,user-scalable=no, width=device-width">
+		<title>Load map Asynchronous</title>
+		<link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>		
+	</head>
+	<body>
+		<div id="container"></div>
+		<script>
+			function onApiLoaded(){
+				var map = new AMap.Map('container', {
+					center:[117.000923, 36.675807],
+					zoom: 6
+				});
+
+				map.plugin(["AMap.ToolBar"], function(){
+					map.addControl(new AMap.ToolBar());
+				});				
+			}
+
+			//load js api asynchlly
+			var url = "https://webapi.amap.com/maps?v=1.4.15&key=1df728c6283873b29a2f11412f99707e&callback=onApiLoaded";
+			var jsapi = document.createElement('script');
+			jsapi.charset = 'utf-8';
+			jsapi.src = url;
+			document.head.appendChild(jsapi);
+
+		</script>
+	</body>
+</html>
