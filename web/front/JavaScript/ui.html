@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.js"></script>
+<script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+
+<head>
+    <!-- head definitions go here -->
+    <meta charset="utf-8">
+    <style>
+        .wrap {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .main {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+            /* cover up menu when inactive */
+        }
+
+        .menu {
+            width: 100px;
+            position: absolute;
+            /* hide behind main box */
+            top: 0;
+            right: 0;
+            z-index: 1;
+            transition: right .5s ease;
+            /* sexy transition effect */
+        }
+
+        .wrap:hover .menu {
+            right: -100px;
+            /* show menu when main area is hovered over */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="slidePpal" class="wrap">
+        <div class="main">
+            <p>Hover for options</p>
+        </div>
+        <!--/.main-->
+        <div class="menu">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+        </div>
+        <!--/.menu-->
+    </div>
+
+    <script>
+/*         jQuery('#slidePpal').hover(function () {
+            // Do nothing
+        }, function () {
+            jQuery.noConflict();
+            jQuery('#slidePpal').animate({
+                left: '-202px'
+            }, 800);
+
+        }); */
+    </script>
+</body>
+
+</html>
