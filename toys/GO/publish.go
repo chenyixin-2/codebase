@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"flag"
 	"fmt"
 	"log"
 	"net"
@@ -15,7 +16,7 @@ type MQTTMsg struct {
 	Flags   uint8
 	TopicId [2]uint8
 	MsgId   uint16
-	Data    *[]uint8
+	Data    *[]byte
 }
 
 func serialize(m *MQTTMsg, packet *[]byte) {
@@ -25,7 +26,6 @@ func serialize(m *MQTTMsg, packet *[]byte) {
 	tid_bytes := make([]byte, 2)
 	tid_bytes[0] = m.TopicId[0]
 	tid_bytes[1] = m.TopicId[1]
-	fmt.Println(tid_bytes)
 	mid_bytes := make([]byte, 2)
 	binary.BigEndian.PutUint16(mid_bytes, m.MsgId)
 	payload_buf := new(bytes.Buffer)
@@ -84,6 +84,9 @@ func sendUDP(dstIp string, dstPort string, data *[]byte) {
 }
 
 func main() {
+	var (
+		payload = flag.String("data", "mypayload", "Payload data")
+	)
 	var msg MQTTMsg
 
 	msg = MQTTMsg{
@@ -97,18 +100,10 @@ func main() {
 	msg.TopicId[1] = 't'
 	fmt.Println(msg.TopicId)
 
-	payload := []uint8{'m', 'y', 'p', 'a', 'y', 'l', 'o', 'a', 'd'}
-	msg.Data = &payload
+	payload_bytes := []byte(*payload)
+	msg.Data = &payload_bytes
 
-	/* 	s1 := binary.Size(msg) ==> -1
-	   	fmt.Println(s1)
-	   	s2 := binary.Size(msg.Data)
-	   	fmt.Println(s2)
-	   	s3 := binary.Size(payload)
-	   	fmt.Println(s3)
-	*/
 	const msg_size = unsafe.Sizeof(msg)
-
 	packet := make([]byte, msg_size)
 	serialize(&msg, &packet)
 	sendUDP("127.0.0.1", "10000", &packet)
