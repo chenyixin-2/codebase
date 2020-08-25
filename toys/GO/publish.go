@@ -3,11 +3,9 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
-	"flag"
 	"fmt"
 	"log"
 	"net"
-	"unsafe"
 )
 
 type MQTTMsg struct {
@@ -83,10 +81,12 @@ func sendUDP(dstIp string, dstPort string, data *[]byte) {
 	   	} */
 }
 
-func main() {
+/* func main() {
 	var (
 		payload = flag.String("data", "mypayload", "Payload data")
 	)
+	flag.Parse()
+
 	var msg MQTTMsg
 
 	msg = MQTTMsg{
@@ -98,13 +98,14 @@ func main() {
 	}
 	msg.TopicId[0] = 't'
 	msg.TopicId[1] = 't'
-	fmt.Println(msg.TopicId)
 
 	payload_bytes := []byte(*payload)
 	msg.Data = &payload_bytes
 
 	const msg_size = unsafe.Sizeof(msg)
+	fmt.Println(msg_size)
+
 	packet := make([]byte, msg_size)
 	serialize(&msg, &packet)
 	sendUDP("127.0.0.1", "10000", &packet)
-}
+} */

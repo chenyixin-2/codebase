@@ -40,8 +40,8 @@ function printPrototype(obj, i) {
     }
 }
 
-
+/* 
 module.exports = {
     GetScriptName: GetScriptName,
     tracePrototypeChainOf: tracePrototypeChainOf
-};
+}; */

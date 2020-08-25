@@ -8,7 +8,6 @@ import (
 	"strings"
 	"sync"
 	"time"
-	//	"golang.org/x/tour/pic"
 )
 
 /*
@@ -22,6 +21,13 @@ const (
 	Big   = 1 << 100
 	Small = Big >> 99
 )
+
+func test() {
+	var msg MQTTMsg = MQTTMsg{
+		Len: 0,
+	}
+	fmt.Println(msg)
+}
 
 func needInt(x int) int { return x*10 + 1 }
 func needFloat(x float64) float64 {
