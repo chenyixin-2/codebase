@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Display a map</title>
+		<meta
+			name="viewport"
+			content="initial-scale=1,maximum-scale=1,user-scalable=no"
+		/>
+		<script src="lib/mapbox-gl.js"></script>
+		<link href="lib/mapbox-gl.css" rel="stylesheet" />
+
+		<script src="lib/mapbox-gl-draw.js"></script>
+		<link rel="stylesheet" href="lib/mapbox-gl-draw.css" type="text/css" />
+		<style>
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+
+			#map {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+				height: 100%;
+			}
+
+			.button {
+				position: absolute;
+				bottom: 55px;
+				left: 90%;
+			}
+			#div-but {
+				background-color: yellow;
+				box-shadow: 0 0 15px rgba(50, 50, 50, 0.7) inset;
+				margin-top: 20px;
+				padding: 15px;
+				width: 100%;
+				height: 700px;
+				border: thick solid red;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- <button class="button">Button</button>
+    <div id="div-but" >
+    </div> -->
+
+		<div id="map"></div>
+		<script>
+			mapboxgl.accessToken =
+				"pk.eyJ1IjoieWNhbyIsImEiOiJjajRydGZ1NHcxOGdhMzNwbDgyOTQzejZjIn0.uyBiXfDcnzCT7ui6nsEcZg"
+
+			map = new mapboxgl.Map({
+				container: "map", // container id
+				style: {
+					version: 8,
+					sources: {
+						"raster-tiles": {
+							type: "raster",
+							tiles: ["http://127.0.0.1:80/{z}/{x}/{y}.png"],
+							tileSize: 256,
+							attribution:
+								'Map tiles by <a target="_top" rel="noopener" href="http://spidersens.com">SpiderSens</a>',
+						},
+					},
+					layers: [
+						{
+							id: "simple-tiles",
+							type: "raster",
+							source: "raster-tiles",
+							minzoom: 0,
+							maxzoom: 23,
+						},
+					],
+				},
+				center: [119.9559179687498357, 31.6866995747013945],
+				zoom: 17, // starting zoom
+				bearing: 13,
+			})
+
+			// Insert the layer beneath any symbol layer.
+			var layers = map.getStyle().layers
+
+			var labelLayerId
+			for (var i = 0; i < layers.length; i++) {
+				if (layers[i].type === "symbol" && layers[i].layout["text-field"]) {
+					labelLayerId = layers[i].id
+					break
+				}
+			}
+
+			map.addLayer(
+				{
+					id: "3d-buildings",
+					source: "composite",
+					"source-layer": "building",
+					filter: ["==", "extrude", "true"],
+					type: "fill-extrusion",
+					minzoom: 15,
+					paint: {
+						"fill-extrusion-color": "#aaa",
+
+						// use an 'interpolate' expression to add a smooth transition effect to the
+						// buildings as the user zooms in
+						"fill-extrusion-height": [
+							"interpolate",
+							["linear"],
+							["zoom"],
+							15,
+							0,
+							15.05,
+							["get", "height"],
+						],
+						"fill-extrusion-base": [
+							"interpolate",
+							["linear"],
+							["zoom"],
+							15,
+							0,
+							15.05,
+							["get", "min_height"],
+						],
+						"fill-extrusion-opacity": 0.6,
+					},
+				},
+				labelLayerId
+			)
+		</script>
+	</body>
+</html>

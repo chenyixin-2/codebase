@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+	<title>English / Chinese Map</title>
+	<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+	<style>
+		html,
+		body,
+		#container {
+			width: 100%;
+			height: 100%
+		}
+	</style>
+</head>
+
+<body>
+	<div id="container"></div>
+	<div class="input-card" style="widows: 16rem;">
+		<h4> Map Language Switch </h4>
+		<div id="lang">
+			<div class="input-item"><input id="en" name="lanuage" type="radio" checked="checked"><span
+					class="input-text">English</span></div>
+			<div class="input-item"><input id="zh_en" name="lanuage" type="radio"><span
+					class="input-text">English-Chinese</span></div>
+			<div class="input-item"><input id="zh_cn" name="lanuage" type="radio"><span
+					class="input-text">Chinese</span></div>
+		</div>
+	</div>
+	<script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+	<script src="https://webapi.amap.com/maps?v=1.4.15&key=1df728c6283873b29a2f11412f99707e"></script>
+	<script>
+		// init map
+		var map = new AMap.Map('container', {
+			resizeEnable: true,
+			center: [121.498586, 31.239637],
+			lang: "en" // options : en, zh_en, zh_cn
+		});
+
+		// bind to radio event
+		var radios = document.querySelectorAll("#lang input");
+		radios.forEach((radio) => {
+			radio.onclick = setLang;
+		});
+
+		function setLang() {
+			map.setLang(this.id);  // <------------------ bind to this, will go for this "outerside" the object
+		}
+
+	</script>
+</body>
+
+</html>

@@ -2,11 +2,11 @@
 <html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.js"></script>
 <script type="text/javascript" src="common.js"></script>
+<script type="text/javascript" src="arrays.js"></script>
 <!-- <script type="text/javascript" src="hello.js"></script>
 <script type="text/javascript" src="objects.js"></script>
 <script type="text/javascript" src="primitives.js"></script>
 <script type="text/javascript" src="strings.js"></script>
-<script type="text/javascript" src="arrays.js"></script>
 <script type="text/javascript" src="iterables.js"></script>
 <script type="text/javascript" src="map.js"></script>
 <script type="text/javascript" src="weakmap.js"></script>
@@ -27,17 +27,14 @@
 <script type="text/javascript" src="TN_Binding.js"></script>
 <script type="text/javascript" src="TN_This.js"></script>
 <script type="text/javascript" src="TN_Arrow.js"></script>
-<script type="text/javascript" src="TN_Getset.js"></script> 
+<script type="text/javascript" src="TN_Getset.js"></script>
 <script type="text/javascript" src="TN_Const.js"></script>
-<script type="text/javascript" src="TN_Callback_Basic.js"></script> -->
-<!-- <script type="text/javascript" src="TN_Callback_Advanced.js"></script> -->
-<!-- <script type="text/javascript" src="test.js"></script> -->
-<!-- <script type="text/javascript" src="class.js"></script> -->
-<!-- <script type="text/javascript" src="static.js"></script> -->
-<!-- <script type="text/javascript" src="private_protected_readonly.js"></script> -->
-<!-- <script type="text/javascript" src="class_checking.js"></script> -->
-<!-- <script type="text/javascript" src="TN_Losing_This.js"></script> -->
+<script type="text/javascript" src="TN_Callback_Basic.js"></script>
+<script type="text/javascript" src="cTN_Losing_This.js"></script>
 <script type="text/javascript" src="Mixins.js"></script>
+<script type="text/javascript" src="TN_Promise_Await.js"></script>
+<script type="text/javascript" src="TN_Buffer.js"></script> -->
+
 <head>
     <!-- head definitions go here -->
     <meta charset="utf-8">
@@ -70,7 +67,7 @@
         }
 
         function showCircle(cx, cy, radius, callback) {
-            let div = document.createElement('div'); // create element 
+            let div = document.createElement('div'); // create element
             div.style.width = 0; // setting element
             div.style.height = 0;
             div.style.left = cx + 'px';

@@ -231,3 +231,14 @@ lg(removeNthFromEnd(l10, 6));
 let l12 = CreateList([1, 2, 4]);
 let l13 = CreateList([1, 3, 4]);
 lg(mergeTwoLists(l12, l13));
+
+let mp = {};
+mp["test"] = "test";
+lg(mp)
+lg(mp["check"])
+
+if (mp["check"] == undefined) {
+    lg("haha");    
+}
+
+console.log(typeof(mp))
